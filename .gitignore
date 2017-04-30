@@ -1,0 +1,25 @@
+*.rbc
+.config
+coverage
+InstalledFiles
+lib/bundler/man
+pkg
+rdoc
+spec/reports
+tmp
+_Store
+*~
+*#
+.#*
+\#*#
+.*.sw[a-z]
+*.un~
+*.tmp
+*.bk
+*.bkup
+
+# ruby/bundler files
+.rvmrc
+Gemfile.lock
+.bundle
+*.gem

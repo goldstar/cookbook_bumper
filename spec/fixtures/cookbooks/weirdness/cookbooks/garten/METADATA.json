@@ -1,0 +1,30 @@
+{
+  "name": "garten",
+  "version": "4.5.6",
+  "description": "Cooks something",
+  "long_description": "",
+  "maintainer": "Ina Garten",
+  "maintainer_email": "ina_garten@foodnetwork.com",
+  "license": "Apache 2.0",
+  "platforms": {
+  },
+  "dependencies": {
+    "json": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  }
+}

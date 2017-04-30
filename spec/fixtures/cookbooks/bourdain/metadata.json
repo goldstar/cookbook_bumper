@@ -1,0 +1,30 @@
+{
+  "name": "bourdain",
+  "version": "4.9.1",
+  "description": "Cooks something",
+  "long_description": "",
+  "maintainer": "Anthony Bourdain",
+  "maintainer_email": "anthony_bourdain@foodnetwork.com",
+  "license": "Apache 2.0",
+  "platforms": {
+  },
+  "dependencies": {
+    "json": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  }
+}

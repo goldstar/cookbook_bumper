@@ -1,0 +1,19 @@
+{
+  "name": "environment_4",
+  "description": "test environment #4",
+  "cookbook_versions": {
+    "bourdain": "= 4.9.1",
+    "florence": "= 0.0.5",
+<<<<<<< fbeec7b5ea3f0fdbc95d0dd47f3c5bc275da8a33
+    "flay": "= 1.1.20",
+=======
+    "flay": "= 1.1.10",
+>>>>>>> don't merge me
+    "fieri": "= 0.9.0",
+    "freitag": "= 0.6.7"
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "flay",
+  "version": "1.1.21",
+  "description": "Cooks something",
+  "long_description": "",
+  "maintainer": "Andrew Zimmern",
+  "maintainer_email": "Andrew Zimmern@foodnetwork.com",
+  "license": "Apache 2.0",
+  "platforms": {
+  },
+  "dependencies": {
+    "json": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  }
+}

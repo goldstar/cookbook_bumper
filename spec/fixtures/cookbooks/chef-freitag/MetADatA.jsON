@@ -1,0 +1,29 @@
+{
+  "name": "freitag",
+  "version": "0.6.7",
+  "description": "Cooks something",
+  "long_description": "",
+  "maintainer": "Amanda Freitag",
+  "maintainer_email": "amanda_freitag@foodnetwork.com",
+  "license": "Apache 2.0",
+  "platforms": {
+  },
+  "dependencies": {
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  }
+}
