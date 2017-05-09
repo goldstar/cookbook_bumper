@@ -1,0 +1,14 @@
+{
+  "name": "environment_2",
+  "description": "test environment #2",
+  "cookbook_versions": {
+    "Florence": "= 0.0.5",
+    "Flay": "= 1.1.20",
+    "Fieri": "= 0.9.0",
+    "Freitag": "= 0.6.7"
+  },
+  "json_class": "Chef::Environment",
+  "chef_type": "environment",
+  "default_attributes": {
+  }
+}

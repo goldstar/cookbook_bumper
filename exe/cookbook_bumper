@@ -1,3 +1,8 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
 
-require "cookbook_bumper"
+require 'cookbook_bumper'
+
+CookbookBumper.git.bump_changed
+CookbookBumper.envs.update
+CookbookBumper.envs.print_log

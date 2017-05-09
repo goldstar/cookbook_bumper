@@ -1,0 +1,8 @@
+Metrics/LineLength:
+  Enabled: false
+
+AllCops:
+  AutoCorrect: true
+
+Documentation:
+  Enabled: false
