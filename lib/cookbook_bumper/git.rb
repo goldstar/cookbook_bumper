@@ -4,18 +4,20 @@ require 'git'
 
 module CookbookBumper
   class Git
+    attr_reader :diff
+
     def initialize
       @git = ::Git.open(Dir.pwd)
       @diff = @git.diff('origin/master')
     end
 
     def changed_files
-      @diff.map { |f| File.expand_path(f.path) }
+      diff.map { |f| File.expand_path(f.path) }
     end
 
     def changed_cookbooks
       changed_files.map do |changed_file_path|
-        Array(CookbookBumper.config.cookbook_path).map do |cookbook_path|
+        CookbookBumper.config.cookbook_path.map do |cookbook_path|
           find_cookbook_by_file(changed_file_path, cookbook_path)
         end.compact
       end.flatten.uniq
@@ -31,7 +33,7 @@ module CookbookBumper
     end
 
     def bumped_metadata
-      @diff.select do |f|
+      diff.select do |f|
         CookbookBumper.config.cookbook_path.any? do |cookbook_path|
           File.expand_path(f.path) =~ %r{#{cookbook_path}/[^/]+/metadata\.rb} &&
             f.patch =~ /^\+version/

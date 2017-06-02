@@ -4,10 +4,7 @@ require 'chef/cookbook/metadata'
 
 module CookbookBumper
   class Metadata
-    extend Forwardable
-
     attr_reader :aliases, :path, :version
-    def_delegators :version, :bump
 
     def initialize(path)
       @path = path
@@ -25,14 +22,22 @@ module CookbookBumper
     end
 
     def bumped?
-      @version == @metadata.version
+      @version != @metadata.version
+    end
+
+    def bump
+      version.bump
+      save
+    end
+
+    def updated_contents
+      File.read(path).sub(/^\s*version.*/) do |version_line|
+        version_line.sub(/[\d\.]+/, @metadata.version => @version)
+      end
     end
 
     def save
-      contents = File.read(path).gsub(/^(?<beginning>version\s+)(?<quote>'|")#{@metadata.version}#{$LAST_MATCH_INFO[:quote]}/) do
-        "#{$LAST_MATCH_INFO[:beginning]}#{$LAST_MATCH_INFO[:quote]}#{@version}#{$LAST_MATCH_INFO[:quote]}"
-      end
-      File.write(path, contents)
+      File.write(path, updated_contents)
     end
 
     def method_missing(method_sym, *args, &block)

@@ -5,4 +5,4 @@ require 'cookbook_bumper'
 
 CookbookBumper.git.bump_changed
 CookbookBumper.envs.update
-CookbookBumper.envs.print_log
+puts CookbookBumper.envs.change_log

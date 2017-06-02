@@ -19,7 +19,7 @@ module CookbookBumper
 
     def bump_modified
       CookbookBumper.git.unbumped_cookbooks.each do |c|
-        CookbookBumper.cookbooks[c].bump
+        self[c].bump
       end
     end
 

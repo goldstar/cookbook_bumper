@@ -29,13 +29,16 @@ module CookbookBumper
       end
     end
 
-    def print_log
-      map do |env|
-        next if env.log.empty?
-        puts format "\n%-20s%10s %10s %10s %10s", env.name, 'Cookbook', 'Action', 'Old Ver', 'New Ver'
-        puts '-' * 63
-        env.log.each do |cookbook, action, old_ver, new_ver|
-          puts format '%30s %10s %10s %10s', cookbook, action, old_ver, new_ver
+    def change_log
+      [].tap do |log|
+        each do |env|
+          next if env.log.empty?
+          log << ' ' * 63
+          log << format("%-20s%10s %10s %10s %10s", env.name, 'Cookbook', 'Action', 'Old Ver', 'New Ver')
+          log << '-' * 63
+          env.log.each do |cookbook, action, old_ver, new_ver|
+            log << format('%30s %10s %10s %10s', cookbook, action, old_ver, new_ver)
+          end
         end
       end
     end

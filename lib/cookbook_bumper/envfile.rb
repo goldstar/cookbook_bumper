@@ -10,7 +10,7 @@ module CookbookBumper
 
     def initialize(path)
       @path = path
-      @env = JSON.parse(File.read(path))
+      @env = parse(File.read(path))
       @log = []
     end
 
@@ -51,7 +51,7 @@ module CookbookBumper
       CookbookBumper.cookbooks.each do |cookbook|
         if cookbook.version != self[cookbook.name]
           log_change(cookbook.name, self[cookbook.name], cookbook.version)
-          self[cookbook.name] = cookbook.version
+          self[cookbook.name] = cookbook.version.exact
         end
       end
     end
@@ -76,6 +76,17 @@ module CookbookBumper
 
     def save
       File.write(path, self)
+    end
+
+    private
+
+    # trim out merge/rebase conflict markings and let those sections be regenerated
+    def resolve_conflcits(json)
+      json.gsub(/^[<>=]{5}.+/, '')
+    end
+
+    def parse(json)
+      JSON.parse(resolve_conflcits(json))
     end
   end
 end

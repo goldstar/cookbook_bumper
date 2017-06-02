@@ -3,13 +3,12 @@
 module CookbookBumper
   class Config
     attr_accessor :repo_root, :exclude_environments
+    attr_writer :cookbook_path, :environment_path
     attr_reader :knife_path
     def initialize
       @exclude_environments = %w[development]
       @knife_path = File.expand_path('.chef/knife.rb')
       @repo_root = File.expand_path('.')
-      # FIXME: knife_path isn't actually configurable because of execution order and config being permanent
-
       read_chef_config
     end
 
@@ -20,15 +19,16 @@ module CookbookBumper
     end
 
     def cookbook_path
-      Array(Chef::Config.cookbook_path).map { |p| File.expand_path(p) }
+      @cookbook_path ||= Array(Chef::Config.cookbook_path).map { |p| File.expand_path(p) }
     end
 
     def environment_path
-      Array(Chef::Config.environment_path).map { |p| File.expand_path(p) }
+      @environment_path ||= Array(Chef::Config.environment_path).map { |p| File.expand_path(p) }
     end
 
     def read_chef_config
       Chef::Config.from_file(@knife_path)
+      @cookbook_path, @environment_path = [nil, nil]
     rescue => e
       warn e
     end

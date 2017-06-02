@@ -4,15 +4,13 @@ module CookbookBumper
   VERSION = '0.1.0'
 
   class Version
-    attr_reader :raw
-
     def initialize(ver_string)
       @ver_string = ver_string
       @major, @minor, @patch = parse(ver_string)
     end
 
     def parse(ver_string)
-      ver_string.to_s.match(/(?<major>\d+)\.(?<minor>\d+)\.(?<patch>\d+)/) do |v|
+      ver_string.to_s.match(/(?<major>\d+)\.(?<minor>\d+)\.?(?<patch>\d*)/) do |v|
         [v[:major], v[:minor], v[:patch]].map(&:to_i)
       end
     end
@@ -26,7 +24,11 @@ module CookbookBumper
     end
 
     def to_s
-      "= #{@major}.#{@minor}.#{@patch}"
+      [@major, @minor, @patch].join('.')
+    end
+
+    def exact
+      to_s.prepend('= ')
     end
   end
 end
