@@ -2,6 +2,7 @@
 
 describe CookbookBumper::EnvFile do
   let(:envfile) { described_class.new('spec/fixtures/environments/environment_1.json') }
+  let(:envfile_conflict) { described_class.new('spec/fixtures/environments/environment_4.json') }
   let(:cookbooks) { CookbookBumper::Cookbooks.new(['spec/fixtures/cookbooks']) }
 
 
@@ -85,7 +86,13 @@ describe CookbookBumper::EnvFile do
     end
   end
 
-  describe '#depp_sort' do
+  describe '#parse' do
+    it 'skips resolves conflicts' do
+      expect(envfile_conflict['flay']).to eq('= 1.1.10')
+    end
+  end
+
+  describe '#deep_sort' do
     let(:sorted)   { '{"1":"one","2":{"a":"apple","b":"bear"},"3":["c","d","b","a"]}' }
     let(:unsorted) { '{"2":{"b":"bear","a":"apple"},"3":["c","d","b","a"],"1":"one"}' }
     it 'sorts a hash recursively' do
