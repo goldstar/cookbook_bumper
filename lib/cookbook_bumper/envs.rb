@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'terminal-table'
+
 module CookbookBumper
   class Envs
     include Enumerable
@@ -7,6 +9,7 @@ module CookbookBumper
       @files = environment_path.map { |e| Dir[File.join(e, '*')] }.flatten
       @envs = @files.map { |file| CookbookBumper::EnvFile.new(file) }
       @change_log = []
+      Terminal::Table::Style.defaults = { border_top: false, border_bottom: false, border_y: '', border_i: '' }
     end
 
     def [](env_name)
@@ -30,17 +33,13 @@ module CookbookBumper
     end
 
     def change_log
-      [].tap do |log|
-        each do |env|
-          next if env.log.empty?
-          log << ' ' * 63
-          log << format("%-20s%10s %10s %10s %10s", env.name, 'Cookbook', 'Action', 'Old Ver', 'New Ver')
-          log << '-' * 63
-          env.log.each do |cookbook, action, old_ver, new_ver|
-            log << format('%30s %10s %10s %10s', cookbook, action, old_ver, new_ver)
-          end
+      reject { |env| env.log.empty? }.map do |env|
+        Terminal::Table.new do |t|
+          t.title = env.name
+          t.headings = ['Cookbook', 'Action', 'Old Ver', 'New Ver']
+          t.rows = env.log
         end
-      end
+      end.join("\n\n")
     end
   end
 end

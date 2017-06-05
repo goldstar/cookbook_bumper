@@ -31,12 +31,4 @@ describe CookbookBumper::Envs do
       envs.update
     end
   end
-
-  describe '#change_log' do
-    it 'is evenly formatted' do
-      envs.each { |env| allow(env).to receive(:log).and_return(log) }
-      expect(envs.change_log.length).not_to eq(0)
-      expect(envs.change_log).to all(satisfy{ |line| line.length == 63 })
-    end
-  end
 end
