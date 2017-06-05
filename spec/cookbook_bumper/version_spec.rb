@@ -15,9 +15,8 @@ describe CookbookBumper::Version do
 
   describe '#bump' do
     it 'bumps the version' do
-      expect{version.bump}.to change{version.to_s}.from('1.2.3').to('1.2.4')
+      expect { version.bump }.to change { version.to_s }.from('1.2.3').to('1.2.4')
     end
-
   end
 
   describe '#==' do
@@ -45,5 +44,4 @@ describe CookbookBumper::Version do
       expect(version.exact).to eq('= 1.2.3')
     end
   end
-
 end

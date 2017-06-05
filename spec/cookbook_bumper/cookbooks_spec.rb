@@ -1,8 +1,10 @@
 # frozen_string_literal: true
 
 describe CookbookBumper::Cookbooks do
-  let(:cookbooks) { described_class.new(['spec/fixtures/cookbooks',
-                                         'spec/fixtures/cookbooks/weirdness/cookbooks']) }
+  let(:cookbooks) do
+    described_class.new(['spec/fixtures/cookbooks',
+                         'spec/fixtures/cookbooks/weirdness/cookbooks'])
+  end
 
   describe '#bump_modified' do
     it 'bumps modified cookbooks' do
@@ -24,8 +26,7 @@ describe CookbookBumper::Cookbooks do
     end
 
     it 'raises on duplicates' do
-      expect{cookbooks['flay'].name}.to raise_error{RuntimeError}
+      expect { cookbooks['flay'].name }.to raise_error(RuntimeError)
     end
   end
-
 end

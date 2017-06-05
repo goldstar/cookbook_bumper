@@ -5,7 +5,6 @@ describe CookbookBumper::EnvFile do
   let(:envfile_conflict) { described_class.new('spec/fixtures/environments/environment_4.json') }
   let(:cookbooks) { CookbookBumper::Cookbooks.new(['spec/fixtures/cookbooks']) }
 
-
   describe '#name' do
     it 'is the name' do
       expect(envfile.name).to eq('environment_1')
@@ -20,33 +19,33 @@ describe CookbookBumper::EnvFile do
 
   describe '#[]=' do
     it 'sets cookbook versions' do
-      expect{envfile['fieri'] = '1.2.3'}.to change{envfile['fieri']}.from('= 0.9.0').to('1.2.3')
+      expect { envfile['fieri'] = '1.2.3' }.to change { envfile['fieri'] }.from('= 0.9.0').to('1.2.3')
     end
   end
 
   describe '#log_change' do
     it 'collects logs' do
       allow(CookbookBumper).to receive(:cookbooks).and_return('fieri' => double(bumped?: true))
-      expect{envfile.log_change('fieri', 'old', 'new')}.to change{envfile.log.length}.from(0).to(1)
-      expect{envfile.log_change('fieri', 'old', 'new')}.to change{envfile.log.length}.from(1).to(2)
+      expect { envfile.log_change('fieri', 'old', 'new') }.to change { envfile.log.length }.from(0).to(1)
+      expect { envfile.log_change('fieri', 'old', 'new') }.to change { envfile.log.length }.from(1).to(2)
     end
 
     it 'detects added logs' do
-      expect{envfile.log_change('fieri', nil, 'new')}.to change{envfile.log}.from([]).to([['fieri', 'Added', nil, 'new']])
+      expect { envfile.log_change('fieri', nil, 'new') }.to change { envfile.log }.from([]).to([['fieri', 'Added', nil, 'new']])
     end
 
     it 'detects deleted logs' do
-      expect{envfile.log_change('fieri', 'old', nil)}.to change{envfile.log}.from([]).to([['fieri', 'Deleted', 'old', nil]])
+      expect { envfile.log_change('fieri', 'old', nil) }.to change { envfile.log }.from([]).to([['fieri', 'Deleted', 'old', nil]])
     end
 
     it 'detects bumped logs' do
       allow(CookbookBumper).to receive(:cookbooks).and_return('fieri' => double(bumped?: true))
-      expect{envfile.log_change('fieri', 'old', 'new')}.to change{envfile.log}.from([]).to([['fieri', 'Bumped', 'old', 'new']])
+      expect { envfile.log_change('fieri', 'old', 'new') }.to change { envfile.log }.from([]).to([%w[fieri Bumped old new]])
     end
 
     it 'detects updated logs' do
       allow(CookbookBumper).to receive(:cookbooks).and_return('fieri' => double(bumped?: false))
-      expect{envfile.log_change('fieri', 'old', 'new')}.to change{envfile.log}.from([]).to([['fieri', 'Updated', 'old', 'new']])
+      expect { envfile.log_change('fieri', 'old', 'new') }.to change { envfile.log }.from([]).to([%w[fieri Updated old new]])
     end
   end
 
@@ -59,7 +58,7 @@ describe CookbookBumper::EnvFile do
   describe '#update' do
     it 'updates from metadata' do
       allow(CookbookBumper).to receive(:cookbooks).and_return(cookbooks)
-      expect{envfile.update}.to change{envfile['flay'].to_s}.from('= 1.1.20').to('= 1.1.21')
+      expect { envfile.update }.to change { envfile['flay'].to_s }.from('= 1.1.20').to('= 1.1.21')
     end
 
     it 'logs changes' do
@@ -72,10 +71,10 @@ describe CookbookBumper::EnvFile do
   describe '#clean' do
     it 'deletes entries without cookbooks' do
       allow(CookbookBumper).to receive(:cookbooks).and_return(cookbooks)
-      expect{envfile.clean}.to change{envfile.keys}.from(
-        ['florence', 'flay', 'fieri', 'freitag']
+      expect { envfile.clean }.to change { envfile.keys }.from(
+        %w[florence flay fieri freitag]
       ).to(
-        ['florence', 'flay', 'freitag']
+        %w[florence flay freitag]
       )
     end
 
@@ -99,5 +98,4 @@ describe CookbookBumper::EnvFile do
       expect(envfile.deep_sort(JSON.parse(unsorted)).to_json).to eq(sorted)
     end
   end
-
 end

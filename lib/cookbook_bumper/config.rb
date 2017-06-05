@@ -28,7 +28,8 @@ module CookbookBumper
 
     def read_chef_config
       Chef::Config.from_file(@knife_path)
-      @cookbook_path, @environment_path = [nil, nil]
+      @cookbook_path = nil
+      @environment_path = nil
     rescue => e
       warn e
     end

@@ -23,14 +23,14 @@ describe CookbookBumper::Metadata do
   describe '#method_missing' do
     it 'passes to Chef::Cookbook::Metadata' do
       expect(metadata.name).to eq('flay')
-      expect{metadata.foobar}.to raise_error{ NoMethodError }
+      expect { metadata.foobar }.to raise_error(NoMethodError)
     end
   end
 
   describe '#bumped?' do
     it 'tracks bumped status' do
       allow(metadata).to receive(:save)
-      expect{metadata.bump}.to change{metadata.bumped?}.from(false).to(true)
+      expect { metadata.bump }.to change { metadata.bumped? }.from(false).to(true)
     end
   end
 

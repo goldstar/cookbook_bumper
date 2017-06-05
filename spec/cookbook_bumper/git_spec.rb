@@ -2,20 +2,24 @@
 
 describe CookbookBumper::Git do
   let(:git) { described_class.new }
-  let(:diff) {[
-    double(path: 'foo/bar'),
-    double(path: 'foo/baz'),
-    double(path: 'foo/bat')
-  ]}
-  let(:changed_files) {
-    diff.map{ |f| File.expand_path(f.path) }
-  }
+  let(:diff) do
+    [
+      double(path: 'foo/bar'),
+      double(path: 'foo/baz'),
+      double(path: 'foo/bat')
+    ]
+  end
+  let(:changed_files) do
+    diff.map { |f| File.expand_path(f.path) }
+  end
 
-  let(:config_cookbook_path) {[
-    File.expand_path('cookbooks'),
-    File.expand_path('cookbooks/more/cookbooks'),
-    File.expand_path('other_cookbooks')
-  ]}
+  let(:config_cookbook_path) do
+    [
+      File.expand_path('cookbooks'),
+      File.expand_path('cookbooks/more/cookbooks'),
+      File.expand_path('other_cookbooks')
+    ]
+  end
 
   describe '#changed_files' do
     it 'expands paths' do

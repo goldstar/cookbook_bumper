@@ -2,12 +2,14 @@
 
 describe CookbookBumper::Envs do
   let(:envs) { described_class.new(['spec/fixtures/environments']) }
-  let(:log) {[
-    ['fieri',    'Deleted', '= 0.9.0',  nil],
-    ['flay',     'Updated', '= 1.1.20', '= 1.1.21'],
-    ['freitag',  'Bumped',  '= 0.6.7',  '= 0.6.8'],
-    ['florence', 'Added',   nil,        '= 0.0.5']
-  ]}
+  let(:log) do
+    [
+      ['fieri', 'Deleted', '= 0.9.0', nil],
+      ['flay',     'Updated', '= 1.1.20', '= 1.1.21'],
+      ['freitag',  'Bumped',  '= 0.6.7',  '= 0.6.8'],
+      ['florence', 'Added',   nil,        '= 0.0.5']
+    ]
+  end
 
   describe '#update' do
     it 'cleans, updates, and saves all environments except exclusions' do
