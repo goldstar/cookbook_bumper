@@ -1,8 +1,10 @@
 # CookbookBumper
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/cookbook_bumper`. To experiment with that code, run `bin/console` for an interactive prompt.
+CookBumper does exactly what you think, it bumps cookbook versions for you as you modify them.
 
-TODO: Delete this and the text above, and describe your gem
+When it runs it looks for cookbooks that have been modified and bumps them.  It also updates your
+environment files with the latest versions of all the cookbooks, and gives a nice little print out
+of what it did.
 
 ## Installation
 
@@ -22,7 +24,54 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Configure it as a rake task
+
+```ruby
+require 'cookbook_bumper/rake_task'
+
+CookbookBumper::RakeTask.new(:bump)
+```
+
+Or use it directly from the command line
+
+```bash
+$ cookbook_bumper
+                   production
+-------------------------------------------------
+ Cookbook             Action   Old Ver   New Ver
+-------------------------------------------------
+ apparmor             Deleted  = 0.9.0
+ awscli               Bumped   = 0.0.3   0.0.4
+ backups              Updated  = 0.1.6   0.1.7
+                     staging
+-------------------------------------------------
+ Cookbook             Action   Old Ver   New Ver
+-------------------------------------------------
+ apparmor             Deleted  = 0.9.0
+ awscli               Bumped   = 0.0.3   0.0.4
+ backups              Updated  = 0.1.6   0.1.7
+```
+
+## Configuration
+
+At the moment the only way to change the default settings is through the rake task
+
+
+* `cookbook_path` - Where to look for cookbooks - `Array` (default: read from `knife.rb`)
+* `environment_path` - Where to look for environment files - `Array` (default: read from `knife.rb`)
+* `exclude_environment` - Names of environments to leave alone - `Array` (default: `['development']`)
+* `repo_root` - Root of repository to look for changes - `String` (default\*: `./`)
+* `knife_path` - Location of `knife.rb` - `String` (default\*: `./.chef/knife.rb`)
+
+\*:_Relative paths are relative to the location of the Rakefile_
+
+```ruby
+require 'cookbook_bumper/rake_task'
+
+CookbookBumper::RakeTask.new(:bump) do |config|
+  config.knife_path = './knife.rb'
+end
+```
 
 ## Development
 
@@ -32,7 +81,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/cookbook_bumper.
+Bug reports and pull requests are welcome on GitHub at https://github.com/goldstar/cookbook_bumper.
 
 
 ## License
