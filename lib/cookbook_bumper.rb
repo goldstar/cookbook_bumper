@@ -22,11 +22,13 @@ module CookbookBumper
     @cookbooks ||= Cookbooks.new(config.cookbook_path)
   end
 
-  def self.git
-    @git ||= Git.new
-  end
+  def self.run(override_config = nil)
+    @config = override_config if override_config
+    envs = Envs.new(config.environment_path)
+    git = Git.new
 
-  def self.envs
-    @envs ||= Envs.new(config.environment_path)
+    git.bump_changed
+    envs.update
+    puts envs.change_log
   end
 end

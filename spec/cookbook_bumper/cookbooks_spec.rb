@@ -6,16 +6,6 @@ describe CookbookBumper::Cookbooks do
                          'spec/fixtures/cookbooks/weirdness/cookbooks'])
   end
 
-  describe '#bump_modified' do
-    it 'bumps modified cookbooks' do
-      allow(CookbookBumper.git).to receive(:unbumped_cookbooks).and_return(%w[freitag florence])
-      expect(cookbooks['freitag']).to receive(:bump)
-      expect(cookbooks['florence']).to receive(:bump)
-
-      cookbooks.bump_modified
-    end
-  end
-
   describe '#[]' do
     it 'retrives cookbooks by name' do
       expect(cookbooks['florence'].name).to eq('florence')

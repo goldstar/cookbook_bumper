@@ -17,12 +17,6 @@ module CookbookBumper
       end.first
     end
 
-    def bump_modified
-      CookbookBumper.git.unbumped_cookbooks.each do |c|
-        self[c].bump
-      end
-    end
-
     def each
       @metadata.each do |md|
         yield md
