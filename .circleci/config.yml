@@ -1,0 +1,82 @@
+version: 2.0
+
+jobs:
+  checkout_code:
+    docker:
+      - image: circleci/ruby:2.3.4
+    steps:
+      - checkout
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - save_cache:
+          key: v1-repo-{{ checksum ".circle-sha" }}
+          paths:
+            - .
+  bundle:
+    docker:
+      - image: circleci/ruby:2.3.4
+    steps:
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - restore_cache:
+          keys:
+            - v1-repo-{{ checksum ".circle-sha" }}
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --path vendor/bundle
+      - save_cache:
+          key: v1-bundle-{{ checksum "Gemfile.lock" }}
+          paths:
+            - vendor/bundle
+
+  style:
+    docker:
+      - image: circleci/ruby:2.3.4
+    steps:
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - restore_cache:
+          keys:
+            - v1-repo-{{ checksum ".circle-sha" }}
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rake style
+
+  specs:
+    docker:
+      - image: circleci/ruby:2.3.4
+    steps:
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - restore_cache:
+          keys:
+            - v1-repo-{{ checksum ".circle-sha" }}
+      - restore_cache:
+          keys:
+            - v1-bundle-{{ checksum "Gemfile.lock" }}
+      - run: bundle install --path vendor/bundle
+      - run: bundle exec rake spec
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - checkout_code
+      - bundle:
+          requires:
+            - checkout_code
+      - style:
+          requires:
+            - checkout_code
+            - bundle
+      - specs:
+          requires:
+            - checkout_code
+            - bundle
