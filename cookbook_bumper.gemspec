@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.0'
   spec.add_development_dependency 'pry'
   spec.add_development_dependency 'rubocop'
-  spec.add_dependency 'chef', '~> 13.0'
+  spec.add_dependency 'chef', '>= 13.0', '< 15.0'
   spec.add_dependency 'terminal-table', '~> 1.8'
   spec.add_dependency 'git', '~> 1.3'
 end
