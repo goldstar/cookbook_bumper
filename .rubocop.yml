@@ -1,0 +1,12 @@
+Metrics/LineLength:
+  Enabled: false
+
+BlockLength:
+  Exclude:
+    - '**/spec/**/*.rb'
+
+AllCops:
+  AutoCorrect: true
+
+Documentation:
+  Enabled: false
